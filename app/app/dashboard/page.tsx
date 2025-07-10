@@ -8,6 +8,8 @@ import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Separator } from "@/components/ui/separator";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Markdown } from "@/components/ui/markdown";
 
 interface Repository {
   id: number;
@@ -235,19 +237,19 @@ export default function DashboardPage() {
     return (
       <div className="min-h-screen bg-black text-white">
         <nav className="border-b border-zinc-800">
-          <div className="max-w-4xl mx-auto px-6 h-16 flex items-center">
+          <div className="max-w-4xl mx-auto px-6 h-16 flex items-center justify-center">
             <Skeleton className="h-8 w-20 bg-zinc-800" />
           </div>
         </nav>
-        <main className="max-w-4xl mx-auto px-6 py-16">
-          <div className="space-y-12">
-            <div className="space-y-6">
-              <Skeleton className="h-12 w-64 bg-zinc-800" />
-              <Skeleton className="h-5 w-96 bg-zinc-800" />
+        <main className="max-w-4xl mx-auto px-6 py-16 flex items-center justify-center">
+          <div className="space-y-12 w-full">
+            <div className="space-y-6 text-center">
+              <Skeleton className="h-12 w-64 bg-zinc-800 mx-auto" />
+              <Skeleton className="h-5 w-96 bg-zinc-800 mx-auto" />
             </div>
             <Card className="bg-zinc-900 border-zinc-800">
               <CardHeader>
-                <Skeleton className="h-6 w-48 bg-zinc-800" />
+                <Skeleton className="h-6 w-48 bg-zinc-800 mx-auto" />
               </CardHeader>
               <CardContent>
                 <Skeleton className="h-32 w-full bg-zinc-800" />
@@ -263,11 +265,11 @@ export default function DashboardPage() {
     return (
       <div className="min-h-screen bg-black text-white">
         <nav className="border-b border-zinc-800">
-          <div className="max-w-4xl mx-auto px-6 h-16 flex items-center">
+          <div className="max-w-4xl mx-auto px-6 h-16 flex items-center justify-center">
             <Button
               variant="ghost"
               asChild
-              className="text-white hover:bg-zinc-900 p-0"
+              className="text-white hover:bg-zinc-900 p-0 absolute left-6"
             >
               <Link href="/app" className="text-xl font-light tracking-wide">
                 ← TLGIT
@@ -275,8 +277,8 @@ export default function DashboardPage() {
             </Button>
           </div>
         </nav>
-        <main className="max-w-4xl mx-auto px-6 py-16">
-          <div className="max-w-md mx-auto text-center space-y-8">
+        <main className="max-w-4xl mx-auto px-6 py-16 flex items-center justify-center min-h-[calc(100vh-64px)]">
+          <div className="max-w-md mx-auto text-center space-y-8 w-full">
             <div className="space-y-6">
               <h1 className="text-4xl font-extralight tracking-tight">
                 No Tracking Data
@@ -301,11 +303,11 @@ export default function DashboardPage() {
     <div className="min-h-screen bg-black text-white">
       {/* Navigation */}
       <nav className="border-b border-zinc-800">
-        <div className="max-w-4xl mx-auto px-6 h-16 flex items-center justify-between">
+        <div className="max-w-4xl mx-auto px-6 h-16 flex items-center justify-center">
           <Button
             variant="ghost"
             asChild
-            className="text-white hover:bg-zinc-900 p-0"
+            className="text-white hover:bg-zinc-900 p-0 absolute left-6"
           >
             <Link href="/app" className="text-xl font-light tracking-wide">
               ← TLGIT
@@ -318,7 +320,7 @@ export default function DashboardPage() {
             <Button
               variant="outline"
               onClick={stopTracking}
-              className="border-zinc-700 text-zinc-300 hover:bg-zinc-900"
+              className="border-zinc-700 text-zinc-300 hover:bg-zinc-900 absolute right-6"
             >
               Stop Tracking
             </Button>
@@ -329,8 +331,8 @@ export default function DashboardPage() {
       <main className="max-w-4xl mx-auto px-6 py-16">
         <div className="space-y-12">
           {/* Header */}
-          <div className="flex items-start justify-between">
-            <div className="space-y-4">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-6 text-center lg:text-left">
+            <div className="space-y-4 flex-1">
               <h1 className="text-4xl font-extralight tracking-tight">
                 Dashboard
               </h1>
@@ -342,58 +344,60 @@ export default function DashboardPage() {
               variant="outline"
               onClick={loadTrackingData}
               disabled={isLoading}
-              className="border-zinc-700 text-zinc-300 hover:bg-zinc-900"
+              className="border-zinc-700 text-zinc-300 hover:bg-zinc-900 mx-auto lg:mx-0"
             >
               {isLoading ? "Refreshing..." : "Refresh Data"}
             </Button>
           </div>
 
           {/* Error Alerts */}
-          {error && (
-            <Alert
-              variant="destructive"
-              className="bg-red-950/50 border-red-900/50 text-red-300"
-            >
-              <AlertDescription>
-                <div className="space-y-2">
-                  <div className="font-medium">GitHub API Error:</div>
-                  <pre className="text-xs whitespace-pre-wrap">{error}</pre>
-                </div>
-              </AlertDescription>
-            </Alert>
-          )}
-
-          {aiError && (
-            <Alert
-              variant="destructive"
-              className="bg-red-950/50 border-red-900/50 text-red-300"
-            >
-              <AlertDescription>
-                AI Error: {aiError}
-                {aiError.includes("API key") && (
-                  <div className="mt-2 text-sm">
-                    Make sure to set the{" "}
-                    <code className="bg-red-900/50 px-1 rounded">
-                      OPENAI_API_KEY
-                    </code>{" "}
-                    environment variable.
+          <div className="space-y-4 max-w-4xl mx-auto">
+            {error && (
+              <Alert
+                variant="destructive"
+                className="bg-red-950/50 border-red-900/50 text-red-300"
+              >
+                <AlertDescription>
+                  <div className="space-y-2">
+                    <div className="font-medium">GitHub API Error:</div>
+                    <pre className="text-xs whitespace-pre-wrap">{error}</pre>
                   </div>
-                )}
-              </AlertDescription>
-            </Alert>
-          )}
+                </AlertDescription>
+              </Alert>
+            )}
+
+            {aiError && (
+              <Alert
+                variant="destructive"
+                className="bg-red-950/50 border-red-900/50 text-red-300"
+              >
+                <AlertDescription>
+                  AI Error: {aiError}
+                  {aiError.includes("API key") && (
+                    <div className="mt-2 text-sm">
+                      Make sure to set the{" "}
+                      <code className="bg-red-900/50 px-1 rounded">
+                        OPENAI_API_KEY
+                      </code>{" "}
+                      environment variable.
+                    </div>
+                  )}
+                </AlertDescription>
+              </Alert>
+            )}
+          </div>
 
           {/* Tracked Repositories */}
           <div className="space-y-8">
-            <h2 className="text-2xl font-light tracking-wide">
+            <h2 className="text-2xl font-light tracking-wide text-center lg:text-left">
               Tracked Repositories
             </h2>
-            <div className="grid gap-8">
+            <div className="grid gap-8 max-w-4xl mx-auto">
               {trackingData.repositories.map((repo) => (
                 <Card key={repo.id} className="bg-zinc-900 border-zinc-800">
                   <CardHeader className="pb-6">
-                    <div className="flex items-start justify-between">
-                      <div className="space-y-2">
+                    <div className="flex flex-col lg:flex-row items-start justify-between gap-4">
+                      <div className="space-y-2 flex-1 text-center lg:text-left">
                         <CardTitle className="text-2xl font-light text-white">
                           {repo.name}
                         </CardTitle>
@@ -403,7 +407,7 @@ export default function DashboardPage() {
                           </p>
                         )}
                       </div>
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-3 mx-auto lg:mx-0">
                         {repo.private && (
                           <Badge
                             variant="secondary"
@@ -436,7 +440,7 @@ export default function DashboardPage() {
                       {/* AI Summary Section */}
                       {aiSummaries[repo.id] && (
                         <div className="space-y-4">
-                          <h4 className="font-medium flex items-center gap-3 text-white">
+                          <h4 className="font-medium flex items-center justify-center lg:justify-start gap-3 text-white">
                             AI Summary
                             <Badge
                               variant="outline"
@@ -447,10 +451,12 @@ export default function DashboardPage() {
                             </Badge>
                           </h4>
                           <div className="bg-zinc-800/50 rounded-lg p-6 space-y-4">
-                            <div className="prose prose-sm max-w-none text-sm text-zinc-300 leading-relaxed whitespace-pre-line">
-                              {aiSummaries[repo.id].summary}
+                            <div className="prose prose-sm max-w-none text-sm text-zinc-300 leading-relaxed">
+                              <Markdown>
+                                {aiSummaries[repo.id].summary}
+                              </Markdown>
                             </div>
-                            <div className="text-xs text-zinc-500">
+                            <div className="text-xs text-zinc-500 text-center lg:text-left">
                               Generated{" "}
                               {new Date(
                                 aiSummaries[repo.id].metadata.generatedAt
@@ -462,7 +468,7 @@ export default function DashboardPage() {
 
                       {/* Commits Section */}
                       <div className="space-y-4">
-                        <h4 className="font-medium flex items-center gap-3 text-white">
+                        <h4 className="font-medium flex items-center justify-center lg:justify-start gap-3 text-white">
                           Recent Commits
                           <Badge
                             variant="outline"
@@ -473,54 +479,56 @@ export default function DashboardPage() {
                         </h4>
 
                         {commits[repo.id] && commits[repo.id].length > 0 ? (
-                          <div className="space-y-4 max-h-96 overflow-y-auto">
-                            {commits[repo.id].map((commit, index) => {
-                              const insight = aiSummaries[
-                                repo.id
-                              ]?.insights.find((i) => i.sha === commit.sha);
-                              return (
-                                <div key={commit.sha} className="space-y-3">
-                                  <div className="flex items-start gap-4">
-                                    <div className="w-2 h-2 rounded-full bg-zinc-600 mt-2 flex-shrink-0" />
-                                    <div className="flex-1 space-y-2">
-                                      <div className="space-y-2">
-                                        <p className="text-sm font-medium text-white leading-relaxed">
-                                          {commit.commit.message}
-                                        </p>
-                                        <div className="flex items-center gap-4 text-xs text-zinc-500">
-                                          <span>
-                                            {commit.commit.author.name}
-                                          </span>
-                                          <span>
-                                            {formatDate(
-                                              commit.commit.author.date
-                                            )}
-                                          </span>
-                                          <span className="font-mono">
-                                            {commit.sha.substring(0, 7)}
-                                          </span>
+                          <ScrollArea className="h-96 w-full rounded-md border border-zinc-800">
+                            <div className="p-4 space-y-4">
+                              {commits[repo.id].map((commit, index) => {
+                                const insight = aiSummaries[
+                                  repo.id
+                                ]?.insights.find((i) => i.sha === commit.sha);
+                                return (
+                                  <div key={commit.sha} className="space-y-3">
+                                    <div className="flex items-start gap-4">
+                                      <div className="w-2 h-2 rounded-full bg-zinc-600 mt-2 flex-shrink-0" />
+                                      <div className="flex-1 space-y-2">
+                                        <div className="space-y-2">
+                                          <p className="text-sm font-medium text-white leading-relaxed">
+                                            {commit.commit.message}
+                                          </p>
+                                          <div className="flex items-center gap-4 text-xs text-zinc-500">
+                                            <span>
+                                              {commit.commit.author.name}
+                                            </span>
+                                            <span>
+                                              {formatDate(
+                                                commit.commit.author.date
+                                              )}
+                                            </span>
+                                            <span className="font-mono">
+                                              {commit.sha.substring(0, 7)}
+                                            </span>
+                                          </div>
                                         </div>
+                                        {insight && (
+                                          <div className="bg-zinc-800 border border-zinc-700 rounded p-3 text-xs text-zinc-300">
+                                            <span className="font-medium text-zinc-200">
+                                              AI Insight:{" "}
+                                            </span>
+                                            {insight.insight}
+                                          </div>
+                                        )}
                                       </div>
-                                      {insight && (
-                                        <div className="bg-zinc-800 border border-zinc-700 rounded p-3 text-xs text-zinc-300">
-                                          <span className="font-medium text-zinc-200">
-                                            AI Insight:{" "}
-                                          </span>
-                                          {insight.insight}
-                                        </div>
-                                      )}
                                     </div>
+                                    {index < commits[repo.id].length - 1 && (
+                                      <Separator className="ml-6 bg-zinc-800" />
+                                    )}
                                   </div>
-                                  {index < commits[repo.id].length - 1 && (
-                                    <Separator className="ml-6 bg-zinc-800" />
-                                  )}
-                                </div>
-                              );
-                            })}
-                          </div>
+                                );
+                              })}
+                            </div>
+                          </ScrollArea>
                         ) : (
                           <Alert className="bg-zinc-800/50 border-zinc-700 text-zinc-400">
-                            <AlertDescription>
+                            <AlertDescription className="text-center">
                               No commits found since tracking started
                             </AlertDescription>
                           </Alert>

@@ -14,18 +14,20 @@ export default function Home() {
       </nav>
 
       {/* Main Content */}
-      <main className="flex-1">
-        <div className="max-w-4xl mx-auto px-6 py-20">
-          <div className="grid lg:grid-cols-2 gap-20 items-center">
+      <main className="flex-1 flex items-center justify-center">
+        <div className="max-w-4xl mx-auto px-6 py-20 w-full">
+          <div className="grid lg:grid-cols-2 gap-20 items-center justify-center">
             {/* Left Side - Hero */}
-            <div className="space-y-12">
+            <div className="space-y-12 text-center lg:text-left">
               <div className="space-y-8">
-                <Badge
-                  variant="outline"
-                  className="w-fit bg-zinc-800 text-zinc-300 border-zinc-700"
-                >
-                  AI-Powered Development Notes
-                </Badge>
+                <div className="flex justify-center lg:justify-start">
+                  <Badge
+                    variant="outline"
+                    className="w-fit bg-zinc-800 text-zinc-300 border-zinc-700"
+                  >
+                    AI-Powered Development Notes
+                  </Badge>
+                </div>
                 <h1 className="text-6xl font-extralight tracking-tight leading-[1.1]">
                   Turn commits into{" "}
                   <span className="text-zinc-400">stand-ups</span>
@@ -36,7 +38,7 @@ export default function Home() {
                 </p>
               </div>
 
-              <div className="flex items-center gap-6">
+              <div className="flex items-center justify-center lg:justify-start gap-6">
                 <Button
                   asChild
                   className="bg-white text-black hover:bg-zinc-200 h-12 px-8 text-base"
@@ -47,7 +49,7 @@ export default function Home() {
               </div>
 
               {/* Features */}
-              <div className="grid grid-cols-3 gap-8 pt-8 border-t border-zinc-800">
+              <div className="grid grid-cols-3 gap-8 pt-8 border-t border-zinc-800 text-center">
                 <div className="space-y-3">
                   <div className="font-medium text-white">Automatic</div>
                   <div className="text-sm text-zinc-500">Zero setup</div>
@@ -64,7 +66,7 @@ export default function Home() {
             </div>
 
             {/* Right Side - Demo */}
-            <div className="space-y-8">
+            <div className="space-y-8 text-center lg:text-left">
               <div className="text-sm text-zinc-500">
                 Yesterday&apos;s output →
               </div>
@@ -112,7 +114,7 @@ export default function Home() {
                   </div>
                 </CardContent>
               </Card>
-              <div className="text-sm text-zinc-500">
+              <div className="text-sm text-zinc-500 text-center lg:text-left">
                 Generated from 12 commits across 3 repositories
               </div>
             </div>

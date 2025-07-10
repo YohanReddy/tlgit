@@ -159,10 +159,10 @@ export default function AppPage() {
         </div>
       </nav>
 
-      <main className="max-w-4xl mx-auto px-6 py-16">
+      <main className="max-w-4xl mx-auto px-6 py-16 flex items-center justify-center min-h-[calc(100vh-64px)]">
         {!isConnected ? (
           // GitHub Connection Screen
-          <div className="max-w-md mx-auto text-center space-y-12">
+          <div className="max-w-md mx-auto text-center space-y-12 w-full">
             <div className="space-y-6">
               <h1 className="text-5xl font-extralight tracking-tight">
                 Connect GitHub
@@ -202,9 +202,9 @@ export default function AppPage() {
           </div>
         ) : (
           // Repository Selection Screen
-          <div className="space-y-12">
-            <div className="flex items-start justify-between">
-              <div className="space-y-4">
+          <div className="space-y-12 w-full">
+            <div className="flex flex-col lg:flex-row items-start justify-between gap-6 text-center lg:text-left">
+              <div className="space-y-4 flex-1">
                 <h1 className="text-4xl font-extralight tracking-tight">
                   Select Repositories
                 </h1>
@@ -214,7 +214,7 @@ export default function AppPage() {
                 </p>
               </div>
 
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-4 mx-auto lg:mx-0">
                 <Button
                   variant="outline"
                   onClick={fetchRepositories}
@@ -238,26 +238,28 @@ export default function AppPage() {
               </div>
             </div>
 
-            {error && (
-              <Alert
-                variant="destructive"
-                className="bg-red-950/50 border-red-900/50 text-red-300"
-              >
-                <AlertDescription>{error}</AlertDescription>
-              </Alert>
-            )}
+            <div className="space-y-4 max-w-4xl mx-auto">
+              {error && (
+                <Alert
+                  variant="destructive"
+                  className="bg-red-950/50 border-red-900/50 text-red-300"
+                >
+                  <AlertDescription>{error}</AlertDescription>
+                </Alert>
+              )}
 
-            {trackingStarted && (
-              <Alert className="bg-zinc-900 border-zinc-700 text-zinc-300">
-                <AlertDescription className="flex items-center gap-3">
-                  <div className="w-2 h-2 rounded-full bg-white" />
-                  Tracking started! Redirecting to your dashboard...
-                </AlertDescription>
-              </Alert>
-            )}
+              {trackingStarted && (
+                <Alert className="bg-zinc-900 border-zinc-700 text-zinc-300">
+                  <AlertDescription className="flex items-center justify-center gap-3">
+                    <div className="w-2 h-2 rounded-full bg-white" />
+                    Tracking started! Redirecting to your dashboard...
+                  </AlertDescription>
+                </Alert>
+              )}
+            </div>
 
             {isLoading ? (
-              <div className="space-y-4">
+              <div className="space-y-4 max-w-4xl mx-auto">
                 {[...Array(6)].map((_, i) => (
                   <Card key={i} className="bg-zinc-900 border-zinc-800">
                     <CardContent className="p-6">
@@ -274,7 +276,7 @@ export default function AppPage() {
                 ))}
               </div>
             ) : repositories.length > 0 ? (
-              <div className="space-y-3">
+              <div className="space-y-3 max-w-4xl mx-auto">
                 {repositories.map((repo) => (
                   <Card
                     key={repo.id}
@@ -329,7 +331,7 @@ export default function AppPage() {
                 ))}
               </div>
             ) : (
-              <Card className="bg-zinc-900 border-zinc-800">
+              <Card className="bg-zinc-900 border-zinc-800 max-w-4xl mx-auto">
                 <CardContent className="p-16 text-center">
                   <p className="text-zinc-500">No repositories found</p>
                 </CardContent>
